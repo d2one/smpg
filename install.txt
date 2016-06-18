@@ -1,0 +1,15 @@
+CREATE DATABASE smpg;
+CREATE USER smpg_user WITH password 'smpg_password';
+GRANT ALL privileges ON DATABASE smpg TO smpg_user;
+
+CREATE SEQUENCE search_ids;
+CREATE SEQUENCE resource_ids;
+CREATE TYPE search_types AS ENUM ('img', 'link', 'text');
+CREATE TYPE search_status AS ENUM ('added', 'started', 'complete', 'error');
+
+CREATE TABLE search (id INTEGER PRIMARY KEY DEFAULT NEXTVAL('search_ids'), url VARCHAR, type search_types, resources_count SMALLINT, status search_status, created_at timestamptz NOT NULL DEFAULT now());
+
+CREATE TABLE resources (id INTEGER PRIMARY KEY DEFAULT NEXTVAL('resource_ids'), search_id INTEGER, content VARCHAR);
+
+http://localhost:8080/index.php?r=api/search/index
+
