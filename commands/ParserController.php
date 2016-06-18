@@ -2,11 +2,13 @@
 
 namespace app\commands;
 
+use app\models\Resources;
 use app\models\Search;
 use yii\console\Controller;
 use yii\data\ActiveDataProvider;
 use linslin\yii2\curl;
 use app\parse;
+use Yii;
 
 class ParserController extends Controller
 {
@@ -22,11 +24,38 @@ class ParserController extends Controller
             $downloadedData = $this->_getInternalData($search->url);
             $parseManager->setType($search->type);
             $parseManager->setParseData($downloadedData);
-            $result = $parseManager->proceed();
-            $search->status = 'complete';
-            $search->resources_count = count($result);
+            try {
+                $result = $parseManager->proceed($search->text);
+                $search->status = 'complete';
+                $search->resources_count = count($result);
+            } catch (ParserException $e) {
+                $search->status = 'error';
+            }
             $search->save();
-            die();
+            if (!empty($result)) {
+                $this->saveResources($search->id, $result);
+            }
+        }
+    }
+
+
+    protected function saveResources($searchId, $resources = [])
+    {
+        if (empty($resources) || empty($searchId)) {
+            return false;
+        }
+        $connection = Yii::$app->db;
+
+        foreach (array_chunk($resources, 50) as $chunk) {
+            $insertData = [];
+            foreach ($chunk as $item) {
+                $insertData[] = [$searchId, $item];
+            }
+
+            $connection
+                ->createCommand()
+                ->batchInsert(Resources::tableName(), ['search_id', 'content'], $insertData)
+                ->execute();
         }
     }
 
@@ -39,22 +68,14 @@ class ParserController extends Controller
 
         $curl = new curl\Curl();
 
-        //get http://www.google.com:81/ -> timeout
         $response = $curl->get($url);
 
-        // List of status codes here http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
         switch ($curl->responseCode) {
-
             case 'timeout':
-                //timeout error logic here
+            case 404:
                 break;
-
             case 200:
                 return $response;
-                break;
-
-            case 404:
-                //404 Error logic here
                 break;
         }
     }

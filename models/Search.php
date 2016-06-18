@@ -13,18 +13,10 @@ use Yii;
  * @property integer $resources_count
  * @property string $status
  * @property string $created_at
+ * @property string $text
  */
 class Search extends \yii\db\ActiveRecord
 {
-
-    public static $statusTypes = [
-        'added' => 1,
-        'started' => 2,
-        'complete' => 3,
-        'error' => 4
-    ];
-
-    
     /**
      * @inheritdoc
      */
@@ -39,7 +31,7 @@ class Search extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['url', 'type', 'status'], 'string'],
+            [['url', 'type', 'status', 'text'], 'string'],
             [['resources_count'], 'integer'],
             [['created_at'], 'safe'],
         ];
@@ -57,6 +49,7 @@ class Search extends \yii\db\ActiveRecord
             'resources_count' => 'Resources Count',
             'status' => 'Status',
             'created_at' => 'Created At',
+            'text' => 'Text',
         ];
     }
 }

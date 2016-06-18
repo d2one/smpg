@@ -16,11 +16,13 @@ class Manager
 
     protected $_availableTypes = [
         'img' => 'app\parse\grabber\Img',
-        'text',
-        'link'
+        'text' => 'app\parse\grabber\Text',
+        'link' => 'app\parse\grabber\Link',
     ];
 
     protected $_type;
+
+    protected $_parseData;
 
     /**
      * @return mixed
@@ -48,6 +50,7 @@ class Manager
 
     /**
      * @param mixed $type
+     * @throws ParserException
      */
     public function setType($type)
     {
@@ -58,21 +61,30 @@ class Manager
         $this->_type = $type;
     }
 
-    protected $_parseData;
-
-
-    public function proceed()
+    public function proceed($text = '')
     {
         if (empty($this->_type) || empty($this->_parseData)) {
             throw new ParserException('Types incompatabilty');
         }
 
-        $parser = new $this->_availableTypes[$this->_type];
         try {
+            $parser = $this->getParser();
+            if (!empty($text)) {
+                $parser->setSearchText($text);
+            }
             return $parser->parseData($this->_parseData);
         } catch (ParserGrabberException $e) {
             throw new ParserException($e);
         }
+    }
+
+    public function getParser()
+    {
+        if (empty($this->_currentParsers[$this->_type])) {
+            $this->_currentParsers[$this->_type] = new $this->_availableTypes[$this->_type];
+        }
+
+        return $this->_currentParsers[$this->_type];
     }
 
 }

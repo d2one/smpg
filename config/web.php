@@ -53,7 +53,10 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['api/search' => 'api/search'],
+                    'controller' => [
+                        'api/search' => 'api/search',
+                        'api/resources' => 'api/resources'
+                    ],
                 ],
             ],
         ],
