@@ -31,9 +31,26 @@ class Search extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['url', 'type', 'status', 'text'], 'string'],
+            ['type', 'string'],
+            ['type', 'required'],
+            ['status', 'string'],
             [['resources_count'], 'integer'],
             [['created_at'], 'safe'],
+            ['url', function ($attribute, $params) {
+                if (empty($this->attributes[$attribute])) {
+                    $this->addError($attribute, 'Empty url');
+                };
+
+                $filtered = filter_var($this->attributes[$attribute], FILTER_VALIDATE_URL);
+                if (!$filtered) {
+                    $this->addError($attribute, 'Not Valid url');
+                }
+            }],
+            ['text', function ($attribute, $params) {
+                if (!empty($this->attributes[$attribute]) && $this->attributes['type'] != 'text') {
+                    $this->addError($attribute, 'Not available text for this type');
+                };
+            }],
         ];
     }
 
@@ -44,11 +61,11 @@ class Search extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'url' => 'Url',
-            'type' => 'Type',
+            'url' => 'Site',
+            'type' => 'Search Type',
             'resources_count' => 'Resources Count',
             'status' => 'Status',
-            'created_at' => 'Created At',
+            'created_at' => 'Date',
             'text' => 'Text',
         ];
     }

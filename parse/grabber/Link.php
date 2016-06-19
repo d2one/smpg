@@ -34,14 +34,14 @@ class Link implements Grabber
         /*** discard white space ***/
         $this->getDomDocument()->preserveWhiteSpace = false;
 
-        $images = $this->getDomDocument()->getElementsByTagName('a');
+        $links = $this->getDomDocument()->getElementsByTagName('a');
 
-        foreach($images as $img)
+        foreach($links as $link)
         {
-            if (empty($img->getAttribute('href'))) {
+            if (empty($link->getAttribute('href'))) {
                 continue;
             }
-            $result[] = $img->getAttribute('href');
+            $result[] = $link->getAttribute('href');
         }
         return $result;
     }

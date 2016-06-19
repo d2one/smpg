@@ -1,0 +1,1 @@
+*/10 * * * * flock -w0 ~/smpg/parser.lock -c 'php ~/smpg/yii parser'

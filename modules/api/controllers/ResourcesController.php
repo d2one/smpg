@@ -11,7 +11,7 @@ class ResourcesController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['delete'], $actions['update'], $actions['options']);
+        unset($actions['delete'], $actions['update'], $actions['options'], $actions['create']);
 
         $actions = array_merge($actions, [
                 'index' => [

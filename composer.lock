@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d1881818935f06edaa1113ae05f4671d",
-    "content-hash": "d158077e8d464501161ba1a1a2b7ce51",
+    "hash": "07fa902097765cd387d1178dfb688b36",
+    "content-hash": "2783308f2f877e36df5fdfb55add6574",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -639,6 +639,29 @@
     ],
     "packages-dev": [
         {
+            "name": "bower-asset/react",
+            "version": "v15.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactjs/react-bower.git",
+                "reference": "687c097a7db9e4e32681105eded57b553732c14a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactjs/react-bower/zipball/687c097a7db9e4e32681105eded57b553732c14a",
+                "reference": "687c097a7db9e4e32681105eded57b553732c14a",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "react.js",
+                    "react-dom.js"
+                ],
+                "bower-asset-ignore": []
+            }
+        },
+        {
             "name": "bower-asset/typeahead.js",
             "version": "v0.11.1",
             "source": {
@@ -712,6 +735,48 @@
                 "fixtures"
             ],
             "time": "2016-04-29 12:21:54"
+        },
+        {
+            "name": "opw/yii2-react",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/opw/yii2-react.git",
+                "reference": "62fffbbd7789e7583ed11184854f304a6484d8ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/opw/yii2-react/zipball/62fffbbd7789e7583ed11184854f304a6484d8ba",
+                "reference": "62fffbbd7789e7583ed11184854f304a6484d8ba",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/react": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "opw\\react\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT License"
+            ],
+            "authors": [
+                {
+                    "name": "Paulo Santiago",
+                    "email": "paulo@mobilizy.com.br",
+                    "homepage": "http://www.mobilizy.com.br/"
+                }
+            ],
+            "description": "The React.js library extension for the Yii framework",
+            "keywords": [
+                "react",
+                "yii2"
+            ],
+            "time": "2015-05-27 01:06:26"
         },
         {
             "name": "phpspec/php-diff",
@@ -945,9 +1010,11 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "opw/yii2-react": 20
+    },
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.0"

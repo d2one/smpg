@@ -58,6 +58,7 @@ $config = [
                         'api/resources' => 'api/resources'
                     ],
                 ],
+                'site/search/<id:[\d]+>'=>'site/view',
             ],
         ],
 

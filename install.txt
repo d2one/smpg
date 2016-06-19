@@ -9,5 +9,7 @@ CREATE TABLE search (id INTEGER PRIMARY KEY DEFAULT NEXTVAL('search_ids'), url V
 
 CREATE TABLE resources (id INTEGER PRIMARY KEY DEFAULT NEXTVAL('resource_ids'), search_id INTEGER, content VARCHAR);
 
+CREATE INDEX search_ids_index ON resources (search_id);
+
 http://localhost:8080/index.php?r=api/search/index
 

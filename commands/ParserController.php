@@ -6,12 +6,21 @@ use app\models\Resources;
 use app\models\Search;
 use yii\console\Controller;
 use yii\data\ActiveDataProvider;
+use yii\base;
 use linslin\yii2\curl;
 use app\parse;
 use Yii;
+use yii\base\Exception;
 
+/**
+ * Class ParserController
+ * @package app\commands
+ */
 class ParserController extends Controller
 {
+    /**
+     * @throws parse\ParserException
+     */
     public function actionIndex()
     {
         $searchQuery = Search::find()->where("status='added'");
@@ -21,10 +30,10 @@ class ParserController extends Controller
 
         $parseManager = new parse\Manager();
         foreach($dataProvider->getModels() as $search) {
-            $downloadedData = $this->_getInternalData($search->url);
-            $parseManager->setType($search->type);
-            $parseManager->setParseData($downloadedData);
             try {
+                $downloadedData = $this->_getInternalData($search->url);
+                $parseManager->setType($search->type);
+                $parseManager->setParseData($downloadedData);
                 $result = $parseManager->proceed($search->text);
                 $search->status = 'complete';
                 $search->resources_count = count($result);
@@ -39,6 +48,12 @@ class ParserController extends Controller
     }
 
 
+    /**
+     * @param $searchId
+     * @param array $resources
+     * @return bool
+     * @throws \yii\db\Exception
+     */
     protected function saveResources($searchId, $resources = [])
     {
         if (empty($resources) || empty($searchId)) {
@@ -67,16 +82,18 @@ class ParserController extends Controller
         }
 
         $curl = new curl\Curl();
-
-        $response = $curl->get($url);
-
-        switch ($curl->responseCode) {
-            case 'timeout':
-            case 404:
-                break;
-            case 200:
-                return $response;
-                break;
+        try {
+            $response = $curl->get($url);
+            switch ($curl->responseCode) {
+                case 'timeout':
+                case 404:
+                    break;
+                case 200:
+                    return $response;
+                    break;
+            }
+        } catch (Exception $e) {
+            throw new parse\ParserException($e);
         }
     }
 }
