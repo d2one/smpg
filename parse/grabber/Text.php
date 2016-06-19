@@ -24,7 +24,7 @@ class Text implements Grabber
             return $result;
         }
 
-        $data = strip_tags($data);
+        $data = preg_replace('/\s+/', ' ', preg_replace('/<[^>]*>/', '', $data));
         $matches = [];
         foreach (explode(' ', $searchText) as $item) {
             preg_match_all('(.{20}' . $item . '.{20})', strtolower($data), $matches);
@@ -39,7 +39,7 @@ class Text implements Grabber
                 $result[] = mb_convert_encoding('...' . $match . '...', 'UTF-8');
             }
         }
-
+        
         return $result;
     }
 
