@@ -44,7 +44,6 @@ var SearchBox = React.createClass({
     },
 
     handleCommentSubmit: function(search) {
-        var search = this.state.data;
         $.ajax({
             url: this.props.url,
             dataType: 'json',
@@ -54,7 +53,7 @@ var SearchBox = React.createClass({
                 this.loadSearchesFromServer();
             }.bind(this),
             error: function(xhr, status, err) {
-                this.setState({data: comments});
+                this.setState({data: search});
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
@@ -163,7 +162,7 @@ var SearchForm = React.createClass({
             return;
         }
         this.props.onCommentSubmit({url: url, type:type, text: text});
-        this.setState({url: '', text: ''});
+        this.setState(this.getInitialState());
     },
 
     render: function() {

@@ -1,7 +1,9 @@
 <?php
+namespace Parse\Grabber;
 
+use app\parse\grabber\Img;
 
-class ParserTest extends \Codeception\Test\Unit
+class ImgTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
@@ -19,6 +21,6 @@ class ParserTest extends \Codeception\Test\Unit
     // tests
     public function testMe()
     {
-
+        $imgParser = new Img();
     }
 }
