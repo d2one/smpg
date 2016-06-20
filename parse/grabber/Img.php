@@ -9,13 +9,21 @@
 namespace app\parse\grabber;
 
 
+/**
+ * Class Img
+ * @package app\parse\grabber
+ */
 class Img implements Grabber
 {
 
+    /**
+     * @var \DomDocument
+     */
     protected $_domDocument;
 
+
     /**
-     * @return mixed
+     * @return \DomDocument
      */
     public function getDomDocument()
     {
@@ -25,6 +33,13 @@ class Img implements Grabber
         return $this->_domDocument;
     }
 
+
+    /**
+     * Parse prepared data
+     *
+     * @param string $data
+     * @return array
+     */
     public function parseData($data = '')
     {
         $result = [];
@@ -35,7 +50,6 @@ class Img implements Grabber
         $this->getDomDocument()->preserveWhiteSpace = false;
 
         $images = $this->getDomDocument()->getElementsByTagName('img');
-
         foreach($images as $img)
         {
             if (empty($img->getAttribute('src'))) {

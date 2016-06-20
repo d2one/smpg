@@ -12,17 +12,38 @@ use app\parse\grabber\ParserGrabberException;
 class Manager
 {
 
+    /**
+     * Prepared parsers
+     *
+     * @var array
+     */
     protected $_currentParsers = [];
 
+    /**
+     * Resorces types for parcing
+     *
+     * @var array
+     */
     protected $_availableTypes = [
         'img' => 'app\parse\grabber\Img',
         'text' => 'app\parse\grabber\Text',
         'link' => 'app\parse\grabber\Link',
     ];
 
+    /**
+     * Current type resource to parce
+     *
+     * @var string
+     */
     protected $_type;
 
+    /**
+     * Row parsed data
+     *
+     * @var string
+     */
     protected $_parseData;
+
 
     /**
      * @return mixed
@@ -61,6 +82,12 @@ class Manager
         $this->_type = $type;
     }
 
+    /**
+     * Start data to parse
+     * @param string $text
+     * @return array
+     * @throws ParserException
+     */
     public function proceed($text = '')
     {
         if (empty($this->_type) || empty($this->_parseData)) {
@@ -78,6 +105,11 @@ class Manager
         }
     }
 
+    /**
+     * Get available parser instance
+     *
+     * @return {object}
+     */
     public function getParser()
     {
         if (empty($this->_currentParsers[$this->_type])) {

@@ -2740,29 +2740,6 @@
     ],
     "packages-dev": [
         {
-            "name": "bower-asset/react",
-            "version": "v15.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/reactjs/react-bower.git",
-                "reference": "687c097a7db9e4e32681105eded57b553732c14a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/reactjs/react-bower/zipball/687c097a7db9e4e32681105eded57b553732c14a",
-                "reference": "687c097a7db9e4e32681105eded57b553732c14a",
-                "shasum": ""
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "react.js",
-                    "react-dom.js"
-                ],
-                "bower-asset-ignore": []
-            }
-        },
-        {
             "name": "bower-asset/typeahead.js",
             "version": "v0.11.1",
             "source": {
