@@ -28,3 +28,6 @@ phpunit.phar
 
 tests/_output/*
 vendors
+node_modules/
+web/js/
+parser.lock

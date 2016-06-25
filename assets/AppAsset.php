@@ -21,8 +21,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
-        'js/react/react.js',
-        'js/react/react-dom.js',
+        'js/app.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
